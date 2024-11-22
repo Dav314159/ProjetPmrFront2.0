@@ -4,6 +4,7 @@ import {PmrService} from "../services/pmr-service/pmr.service";
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from "rxjs";
 import {MatTableModule} from "@angular/material/table";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-tableau-pmr',
@@ -17,7 +18,8 @@ export class TableauPmrComponent implements OnInit {
   datasourcePmr = new PmrDataSource([]);
 
   // Injection de dépendance
-  constructor(private pmrService: PmrService) {
+  constructor(private pmrService: PmrService,
+              private router : Router) {
   }
 
   ngOnInit() {
@@ -27,9 +29,15 @@ export class TableauPmrComponent implements OnInit {
         2,
         null,
         "47.3846322409, 0.5565788835"
-      )
-    ])
+      )]
+      //this.pmrService.getAllPmr()
+    );
 
+  }
+
+  onDetails(row : Pmr) :void {
+    console.log(row);
+    this.router.navigateByUrl('details/'+row.id);
   }
 }
 
