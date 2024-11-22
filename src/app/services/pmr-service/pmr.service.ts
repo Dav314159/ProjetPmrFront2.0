@@ -13,11 +13,11 @@ export class PmrService {
 
   getAllPmr(): Pmr[]
   {
-    this.http.get<{pmrList: Pmr[]}>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllPmr`).subscribe(
+    this.http.get<Pmr[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllPmr`).subscribe(
       {
-        next: (response: {pmrList: Pmr[]}) => {
-          console.log(response.pmrList);
-          return response.pmrList;
+        next: (response: Pmr[]) => {
+          console.log(response);
+          return response;
         },
         error: () => {
           console.log("oups...");
@@ -35,11 +35,9 @@ export class PmrService {
     this.http.get<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${id}`).subscribe(
       {
         next: (response: Pmr) => {
-          console.log("get pmr", response);
           returnPmr = response;
         },
         error: (message) => {
-          console.log("get pmr error", message);
           returnPmr = new Pmr(-1, "", 0, 0, "");
         },
       }

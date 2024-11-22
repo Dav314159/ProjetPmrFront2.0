@@ -3,7 +3,7 @@ export class Pmr {
               public nom: string,
               public quantite: number,
               public description: number | null,
-              public point_geo: string) {
-
-              }
+              public point_geo: string)
+  {
+  }
 }
