@@ -28,8 +28,12 @@ export class TableauPmrComponent implements OnInit {
         null,
         "47.3846322409, 0.5565788835"
       )
-    ])
+    ]);
 
+  }
+
+  onDetails(row : Pmr) :void {
+    console.log(row);
   }
 }
 
