@@ -1,9 +1,9 @@
 export class Pmr {
   constructor(public id: number,
-              public name: string,
-              public capacity: number,
+              public nom: string,
+              public quantite: number,
               public description: number | null,
-              public geoPoint: string) {
+              public point_geo: string) {
 
-  }
+              }
 }
