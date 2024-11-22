@@ -27,6 +27,7 @@ export class TableauPmrComponent implements OnInit {
       this.pmrService.getAllPmr()
     );
 
+
   }
 
   onDetails(row : Pmr) :void {
