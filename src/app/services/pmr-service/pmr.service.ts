@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Pmr} from "../../models/Pmr";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,36 +14,24 @@ export class PmrService {
 
   getAllPmr(): Pmr[]
   {
+    let returnPmrList: Pmr[] = [];
+
     this.http.get<Pmr[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllPmr`).subscribe(
       {
         next: (response: Pmr[]) => {
-          console.log(response);
-          return response;
+          returnPmrList = response;
         },
         error: () => {
-          console.log("oups...");
-          return [];
+          returnPmrList = [];
         },
       }
     )
 
-    return [];
+    return returnPmrList;
   }
 
-  getPmr(id: number): Pmr
+  getPmr(id: number): Observable<Pmr>
   {
-    let returnPmr: Pmr = new Pmr(-2, "", 0, 0, "");
-    this.http.get<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${id}`).subscribe(
-      {
-        next: (response: Pmr) => {
-          returnPmr = response;
-        },
-        error: (message) => {
-          returnPmr = new Pmr(-1, "", 0, 0, "");
-        },
-      }
-    )
-
-    return returnPmr;
+    return this.http.get<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${id}`);
   }
 }

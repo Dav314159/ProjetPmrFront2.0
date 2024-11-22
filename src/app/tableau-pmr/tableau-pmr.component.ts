@@ -23,20 +23,13 @@ export class TableauPmrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasourcePmr.setData([
-      new Pmr(1,
-        "Rue Saint-Venant",
-        2,
-        null,
-        "47.3846322409, 0.5565788835"
-      )]
-      //this.pmrService.getAllPmr()
+    this.datasourcePmr.setData(
+      this.pmrService.getAllPmr()
     );
 
   }
 
   onDetails(row : Pmr) :void {
-    console.log(row);
     this.router.navigateByUrl('details/'+row.id);
   }
 }
