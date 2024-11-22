@@ -17,7 +17,7 @@ export class PmrService {
       {
         next: (response: {pmrList: Pmr[]}) => {
           console.log(response.pmrList);
-          return response.pmrList;
+          return [...response.pmrList];
         },
         error: () => {
           console.log("oups...");
