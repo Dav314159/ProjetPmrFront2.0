@@ -12,22 +12,9 @@ export class PmrService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getAllPmr(): Pmr[]
+  getAllPmr(): Observable<Pmr[]>
   {
-    let returnPmrList: Pmr[] = [];
-
-    this.http.get<Pmr[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllPmr`).subscribe(
-      {
-        next: (response: Pmr[]) => {
-          returnPmrList = response;
-        },
-        error: () => {
-          returnPmrList = [];
-        },
-      }
-    )
-
-    return returnPmrList;
+    return this.http.get<Pmr[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllPmr`);
   }
 
   getPmr(id: number): Observable<Pmr>

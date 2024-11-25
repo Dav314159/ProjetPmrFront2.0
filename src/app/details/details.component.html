@@ -1,28 +1,31 @@
-<h2>michel</h2>
-<form [formGroup]="form">
-  <div>
-    <label for="id">Id :</label>
-    <input id="id" formControlName="id"/>
-  </div>
+<div>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Id :</mat-label>
+      <input matInput id="id" formControlName="id"/>
+    </mat-form-field>
 
-  <div>
-    <label for="name">Name :</label>
-    <input id="name" formControlName="name"/>
-  </div>
+    <mat-form-field>
+      <mat-label>Name :</mat-label>
+      <input matInput id="name" formControlName="name"/>
+    </mat-form-field>
 
-  <div>
-    <label for="capacity">Capacity :</label>
-    <input id="capacity" formControlName="capacity"/>
-  </div>
+    <mat-form-field>
+      <mat-label>">Capacity :</mat-label>
+      <input matInput id="capacity" formControlName="capacity"/>
+    </mat-form-field>
 
-  <div>
-    <label for="description">Description :</label>
-    <input id="description" formControlName="description"/>
-  </div>
+    <mat-form-field>
+      <mat-label>Description :</mat-label>
+      <input matInput id="description" formControlName="description"/>
+    </mat-form-field>
 
-  <div>
-    <label for="geoPoint1">GeoPoint :</label>
-    <input id="geoPoint1" formControlName="geoPoint1"/>
-    <input id="geoPoint2" formControlName="geoPoint2"/>
-  </div>
-</form>
+    <mat-label>GeoPoint :</mat-label>
+    <mat-form-field>
+      <input matInput id="geoPoint1" formControlName="geoPoint1"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput id="geoPoint2" formControlName="geoPoint2"/>
+    </mat-form-field>
+  </form>
+</div>

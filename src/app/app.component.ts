@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from "./core/header/header.component";
 import {DetailsComponent} from "./details/details.component";
+import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-root',

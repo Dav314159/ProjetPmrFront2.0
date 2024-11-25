@@ -2,15 +2,25 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import {Pmr} from "../models/Pmr";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {PmrService} from "../services/pmr-service/pmr.service";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Observable} from "rxjs";
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserModule} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
@@ -50,7 +60,7 @@ export class DetailsComponent implements OnInit {
           if (this.pmr.id < 0)
           {
             console.log("Erreur 404");
-            //this.router.navigateByUrl("http://localhost:4200/erreur404");
+            this.router.navigateByUrl("http://localhost:4200/erreur404");
           }
 
           this.form = this.fb.group({

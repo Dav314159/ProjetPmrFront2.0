@@ -23,11 +23,13 @@ export class TableauPmrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.datasourcePmr.setData(
-      this.pmrService.getAllPmr()
-    );
-
-
+    this.pmrService.getAllPmr().subscribe({
+      next: data => {
+        this.datasourcePmr.setData(data);
+      },
+      error: error => { console.log('set data tableau error')}
+      }
+    )
   }
 
   onDetails(row : Pmr) :void {
