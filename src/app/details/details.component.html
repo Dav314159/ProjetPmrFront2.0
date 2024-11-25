@@ -1,4 +1,10 @@
-<div>
+<div id="form_div">
+  <h2>Modification PMR</h2>
+
+  <div id="confirmation_div" *ngIf="modificationConfirmee">
+    <p>PMR modifié avec succès !</p>
+  </div>
+
   <form [formGroup]="form">
     <mat-form-field>
       <mat-label>Id :</mat-label>
@@ -27,5 +33,7 @@
     <mat-form-field>
       <input matInput id="geoPoint2" formControlName="geoPoint2"/>
     </mat-form-field>
+
+    <button mat-flat-button (click)="onClickBoutonConfirmer()">Confirmer Modification PMR</button>
   </form>
 </div>

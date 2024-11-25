@@ -1,3 +1,37 @@
+:host {
+  --bleu : #3491f1;
+  --vert : #00c500;
+}
+
 mat-form-field {
   display: block;
+}
+
+#form_div {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+}
+
+#form_div h2 {
+  text-align: center;
+  font-size: 24px;
+}
+
+#form_div button {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bleu);
+}
+
+#confirmation_div {
+  position: relative;
+}
+
+#confirmation_div p {
+  text-align: center;
+  font-size: 18px;
+  color: var(--vert);
 }
