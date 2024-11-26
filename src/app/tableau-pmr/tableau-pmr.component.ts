@@ -33,7 +33,7 @@ export class TableauPmrComponent implements OnInit {
   }
 
   onDetails(row : Pmr) :void {
-    this.router.navigateByUrl('details/'+row.id);
+    this.router.navigateByUrl('pmr-details/'+row.id);
   }
 }
 

@@ -13,7 +13,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-details',
+  selector: 'app-pmr-details',
   standalone: true,
   imports: [
     RouterLink,
@@ -23,10 +23,10 @@ import {NgIf} from "@angular/common";
     MatInput,
     MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatIconModule, NgIf
   ],
-  templateUrl: './details.component.html',
-  styleUrl: './details.component.css'
+  templateUrl: './pmr-details.component.html',
+  styleUrl: './pmr-details.component.css'
 })
-export class DetailsComponent implements OnInit {
+export class PmrDetailsComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   router: Router = inject(Router);
   service: PmrService = inject(PmrService);
