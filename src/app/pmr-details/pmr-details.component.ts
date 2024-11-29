@@ -16,7 +16,6 @@ import {NgIf} from "@angular/common";
   selector: 'app-pmr-details',
   standalone: true,
   imports: [
-    RouterLink,
     ReactiveFormsModule,
     MatFormField,
     MatLabel,
@@ -55,10 +54,11 @@ export class PmrDetailsComponent implements OnInit {
           this.pmr = response;
         },
         error: (message) => {
-          console.log("error ", message);
-          this.pmr = new Pmr(-1, "", 0, "", "");
+          // En cas d'erreur on redirige sur la page 404
+          this.router.navigate(["/**"]);
         },
         complete: () => {
+          console.log("complete", this.pmr);
           // Le reste de la logique de la méthode d'origine est ici car subscribe est vicieuse est n'est pas bloquante pour le code :)
           if (this.pmr.id < 0)
           {
