@@ -1,13 +1,38 @@
+
 a {
-  margin: 0 10px;
-  color: #333;
+  padding: 0;
+  margin: 0;
+  color: black;
   text-decoration: none;
   &:hover {
     text-decoration: overline;
   }
+  font-size: 50px;
+  line-height: 70px;
+}
+a:not(:last-child){
+  border-right: black solid 5px;
+  padding-right: 5px ;
+}
+a:not(:first-child){
+  padding-left: 5px;
 }
 
 .Active {
-  color: #666;
+  color: #fff90c;
   text-decoration: underline;
+}
+
+nav{
+  padding: 0;
+  margin: 0;
+  height: 60px;
+  background : #c017ff;
+  display: flex;
+
+}
+
+img{
+  max-width: 60px;
+  max-height: 60px;
 }
