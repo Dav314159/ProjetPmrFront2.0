@@ -1,27 +1,35 @@
-import {AfterViewInit, Component, inject, OnInit, Renderer2} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactory,
+  ComponentFactoryResolver,
+  inject,
+  OnInit,
+  Renderer2, ViewContainerRef
+} from '@angular/core';
 import * as L from 'leaflet';
 import {Observable, Subscriber} from "rxjs";
 import {PmrService} from "../services/pmr-service/pmr.service";
 import {Pmr} from "../models/Pmr";
+import {PopupmarkerComponent} from "./popupmarker/popupmarker.component";
+import {Layer} from "leaflet";
 
 @Component({
   selector: 'app-carte',
   standalone: true,
-  imports: [],
+  imports: [PopupmarkerComponent],
   templateUrl: './carte.component.html',
   styleUrl: './carte.component.css'
 })
-export class CarteComponent implements OnInit, AfterViewInit {
+export class CarteComponent implements OnInit {
   map: any;
   pmrService = inject(PmrService);
+  vcr = inject(ViewContainerRef);
   dataPmr = new Array<Pmr>();
 
-
   ngOnInit() {
-  }
-
-  ngAfterViewInit() {
     this.loadMap();
+
     this.pmrService.getAllPmr().subscribe({
       next: data => {
         this.dataPmr = data;
@@ -57,26 +65,26 @@ export class CarteComponent implements OnInit, AfterViewInit {
     this.getCurrentPosition()
       .subscribe((position: any) => {
         this.map.flyTo([position.latitude, position.longitude], 13);
-
-        const icon = L.icon({
-          iconUrl: 'assets/images/marker-icon.png',
-          shadowUrl: 'assets/images/marker-shadow.png',
-          popupAnchor: [13, 0],
-        });
-
-        // Dans le bindPopup, on peut mettre du code html dedans
-        const marker = L.marker([position.latitude, position.longitude], { icon }).bindPopup('Angular Leaflet');
-        marker.addTo(this.map);
       });
   }
 
   updatePmrMarkers(): void {
     // On supprimer tous les markers ayant pu être mis, avant de les mettre à jour ce qui les réaffichera
+    this.clearAllMarkers();
 
+    // On ajoute tous les points sur la carte
     for (const pmr of this.dataPmr) {
       const pos: string[] = pmr.point_geo.split(", ");
       const markerPmr = L.marker([Number(pos[0]), Number(pos[1])]);
-      markerPmr.bindPopup( `${pmr.nom}, ${pmr.description}, ${pmr.quantite}`);
+      const popup = L.popup();
+      const appPopupMarker = this.vcr.createComponent(PopupmarkerComponent);
+
+      // Tour de magie, pour éviter que le component ne s'affiche à la fin de la page HTML
+      appPopupMarker.hostView.destroy();
+
+      // On ajouter le component pour la popup dans l'élément de popup
+      popup.setContent(appPopupMarker.location.nativeElement);
+      markerPmr.bindPopup( popup ); // `${pmr.nom}, ${pmr.description}, ${pmr.quantite}`
       markerPmr.addTo(this.map);
     }
   }
