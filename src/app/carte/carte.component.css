@@ -1,6 +1,25 @@
+:root {
+  --transition: cubic-bezier(0.33, 1, 0.68, 1) 0.5s;
+}
+
 #map {
   height: 700px;
   width: 80%;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.a_popup {
+  text-decoration: none;
+  border-radius: 15px;
+  padding: 15px;
+  display: block;
+  color: inherit;
+  font-size: inherit;
+  transition: var(--transition);
+}
+
+.a_popup:hover {
+  background-color: rgba(133, 255, 255, 0.29);
+  transition: var(--transition);
 }

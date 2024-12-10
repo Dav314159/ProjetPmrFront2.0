@@ -1,25 +1,22 @@
 import {
-  AfterViewInit,
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
   inject,
   OnInit,
-  Renderer2, ViewContainerRef
+  ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import * as L from 'leaflet';
 import {Observable, Subscriber} from "rxjs";
 import {PmrService} from "../services/pmr-service/pmr.service";
 import {Pmr} from "../models/Pmr";
-import {PopupmarkerComponent} from "./popupmarker/popupmarker.component";
-import {Layer} from "leaflet";
 
 @Component({
   selector: 'app-carte',
   standalone: true,
-  imports: [PopupmarkerComponent],
+  imports: [],
   templateUrl: './carte.component.html',
-  styleUrl: './carte.component.css'
+  styleUrl: './carte.component.css',
+  encapsulation: ViewEncapsulation.None, // permet de désactiver l'encapsulation du CSS, ce qui rend le CSS de ce component global et non local
+                                         // Dans notre cas cela permet de changer le CSS des éléments insérés dans les popup leaflet.
 })
 export class CarteComponent implements OnInit {
   map: any;
@@ -73,20 +70,33 @@ export class CarteComponent implements OnInit {
     this.clearAllMarkers();
 
     // On ajoute tous les points sur la carte
+    let i = 0;
     for (const pmr of this.dataPmr) {
       const pos: string[] = pmr.point_geo.split(", ");
       const markerPmr = L.marker([Number(pos[0]), Number(pos[1])]);
       const popup = L.popup();
-      const appPopupMarker = this.vcr.createComponent(PopupmarkerComponent);
-
-      // Tour de magie, pour éviter que le component ne s'affiche à la fin de la page HTML
-      appPopupMarker.hostView.destroy();
+      //const appPopupMarker = this.vcr.createComponent(PopupmarkerComponent);
+      //appPopupMarker.setInput("pmr", pmr);
 
       // On ajouter le component pour la popup dans l'élément de popup
-      popup.setContent(appPopupMarker.location.nativeElement);
-      markerPmr.bindPopup( popup ); // `${pmr.nom}, ${pmr.description}, ${pmr.quantite}`
+      //popup.setContent(appPopupMarker.location.nativeElement);
+      popup.setContent(this.createPopup(pmr));
+      markerPmr.bindPopup( popup );
       markerPmr.addTo(this.map);
     }
+  }
+
+  /**
+   * Ca aurait été plus propre de faire un component pour faire le marker, mais ce n'est pas compatible avec leaflet
+   */
+  createPopup(pmr: Pmr): string {
+    return `<a class="a_popup" href="pmr-details/${pmr.id}" target="_blank"><div>
+      <div>Id : ${pmr.id}</div>
+    <div>Nom : ${pmr.nom}</div>
+    <div>Description : ${pmr.description}</div>
+    <div>Point Geo : ${pmr.point_geo}</div>
+    <div>Quantité : ${pmr.quantite}</div>
+    </div></a>`;
   }
 
   clearAllMarkers(): void {
