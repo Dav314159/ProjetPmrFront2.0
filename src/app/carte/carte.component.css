@@ -2,7 +2,13 @@
   --transition: cubic-bezier(0.33, 1, 0.68, 1) 0.5s;
 }
 
+#section_map {
+  position: relative;
+  padding-top: 20px;
+}
+
 #map {
+  position: relative;
   height: 700px;
   width: 80%;
   left: 50%;
