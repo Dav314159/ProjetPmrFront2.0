@@ -10,9 +10,15 @@
                 erreurMessage="Le mot de passe doit contenir : 1 lettre majuscule, 1 lettre minuscule, 1 symbole, 1 chiffre, entre 8 et 100 caracteres"></app-champs>
 
     <div *ngIf="isSignUp">
-      <app-champs message = "Email :" input_id = "mail"></app-champs>
-      <app-champs message = "Nom :" input_id = "lastname"></app-champs>
-      <app-champs message = "Prenom :" input_id = "firstname"></app-champs>
+      <app-champs message = "Email :" input_id = "mail"
+                  regex="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  erreurMessage="Il ne s'agit pas d'une adresse mail valide"></app-champs>
+      <app-champs message = "Nom :" input_id = "lastname"
+                  regex="^[a-zA-Z.-']{1,100}$"
+                  erreurMessage="Il ne s'agit pas d'un nom valide"></app-champs>
+      <app-champs message = "Prenom :" input_id = "firstname"
+                  regex="^[a-zA-Z.-']{1,100}$"
+                  erreurMessage="Il ne s'agit pas d'un prenom valide"></app-champs>
     </div>
 
     <div id="error" *ngIf="error"><p>{{messageErreur}}</p></div>
