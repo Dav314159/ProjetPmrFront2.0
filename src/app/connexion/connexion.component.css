@@ -86,3 +86,20 @@ form button.switch:hover {
   background-color: #f3f3f3; /* Couleur du bouton de droite */
   color: #6c63ff; /* Couleur du texte du bouton de droite */
 }
+
+#error {
+  background-color: #ffe6e6; /* Fond rouge pâle pour signaler une erreur */
+  color: #cc0000; /* Texte rouge sombre pour contraster */
+  padding: 10px; /* Ajoute un peu d'espace à l'intérieur */
+  border: 1px solid #cc0000; /* Bordure rouge sombre */
+  border-radius: 5px; /* Angles arrondis */
+  margin: 10px 0; /* Espacement autour de l'erreur */
+  font-family: Arial, sans-serif; /* Police lisible */
+}
+
+#error p {
+  margin: 0; /* Supprime les marges par défaut */
+  font-size: 14px; /* Taille de texte lisible */
+  font-weight: bold; /* Met en valeur le message d'erreur */
+  text-align: center; /* Centrer le texte */
+}
