@@ -1,11 +1,9 @@
 import {Component, inject, Input, QueryList, ViewChildren} from '@angular/core';
 import {ChampsComponent} from "./champs/champs.component";
 import { CommonModule } from '@angular/common';
-import {Observable, Subscriber} from "rxjs";
 import {UserService} from "../services/user-service/user.service";
 import {User} from "../models/User";
 import {userLogin} from "../../main";
-import {AppComponent} from "../app.component";
 import {FormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
 
@@ -30,16 +28,33 @@ export class ConnexionComponent {
   error : boolean = false;
   messageErreur : string = "Message d'erreur";
 
+  verifRempli() : boolean {
+    let rempli:boolean = true;
+
+    let listeInput : HTMLCollection = <HTMLCollection>document.getElementsByTagName("input");
+    for (let i = 0; i < listeInput.length; i++) {
+      let input: HTMLInputElement = <HTMLInputElement><unknown>listeInput[i];
+      if (input.value == ""){
+        rempli = false;
+      }
+    }
+
+    return rempli;
+  }
 
   onSubmit(e : Event): void {
     e.preventDefault();
 
-    //ne pas verifier les regex pour la connexion
-    //si il y a un changement des regles il ne faut pas empecher ceux ayant un compte de se connecter
+    if (!this.verifRempli()){
+      this.error = true;
+      this.messageErreur = "Tous les champs ne sont pas rempli";
+      return;
+    }
+
     if (this.isSignUp) {
-      this.inscription(e);
+      this.inscription();
     } else {
-      this.connexion(e);
+      this.connexion();
     }
   }
 
@@ -47,7 +62,7 @@ export class ConnexionComponent {
     this.isSignUp = !this.isSignUp;
   }
 
-  inscription(e : Event) : void{
+  inscription() : void{
     let regexValide : boolean = true;
 
     const correctValues: boolean[] = this.champsComponents.map(champ => champ.correct);
@@ -87,7 +102,10 @@ export class ConnexionComponent {
     }
   }
 
-  connexion(e : Event): void {
+  connexion(): void {
+    //ne pas verifier les regex pour la connexion
+    //si il y a un changement des regles il ne faut pas empecher ceux ayant un compte de se connecter
+
     let username : HTMLInputElement = <HTMLInputElement>document.getElementById("username");
     let password : HTMLInputElement = <HTMLInputElement>document.getElementById("password");
 
