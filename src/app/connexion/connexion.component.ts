@@ -1,4 +1,4 @@
-import {Component, inject, Input, QueryList, ViewChildren} from '@angular/core';
+import {Component, inject, QueryList, ViewChildren} from '@angular/core';
 import {ChampsComponent} from "./champs/champs.component";
 import { CommonModule } from '@angular/common';
 import {UserService} from "../services/user-service/user.service";
