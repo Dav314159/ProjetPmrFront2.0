@@ -28,3 +28,13 @@
 .champs input::placeholder {
   color: #aaa; /* Couleur du placeholder */
 }
+.error {
+  color: red; /* Couleur vive pour signaler une erreur */
+  font-size: 14px; /* Taille modérée pour être lisible */
+  margin-top: 5px; /* Ajoute un peu d'espace au-dessus */
+  background-color: #ffe6e6; /* Fond clair pour mieux visualiser */
+  padding: 10px; /* Espace autour du texte */
+  border: 1px solid red; /* Bordure rouge pour délimiter */
+  border-radius: 5px; /* Coins arrondis pour un design moderne */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Légère ombre pour la profondeur */
+}
