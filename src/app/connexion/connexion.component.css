@@ -1,0 +1,88 @@
+/* Style global du formulaire */
+form {
+  background-color: #f9f9f9; /* Fond clair */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  max-width: 400px;
+  margin: 0 auto; /* Centrer le formulaire */
+  display: flex;
+  flex-direction: column;
+}
+
+form h1 {
+  font-size: 24px;
+  color: #4b0082; /* Couleur violet foncé */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form button {
+  background-color: #6c63ff; /* Couleur du bouton */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #5a53d1; /* Couleur du bouton au survol */
+}
+
+form button:active {
+  background-color: #4a45a1; /* Couleur du bouton lorsqu'il est cliqué */
+}
+
+form button:focus {
+  outline: none; /* Retire la bordure de focus par défaut */
+}
+
+form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Bouton pour basculer entre inscription et connexion */
+form button.switch {
+  background-color: transparent;
+  color: #6c63ff;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 15px;
+  cursor: pointer;
+  border: none;
+}
+
+form button.switch:hover {
+  text-decoration: underline;
+}
+
+/* Style du div contenant les boutons */
+.buttons-container {
+  display: flex;
+  justify-content: space-between; /* Place les boutons aux extrémités du div */
+  margin-top: 20px; /* Espacement entre le formulaire et les boutons */
+}
+
+/* Style pour chaque bouton */
+.buttons-container button, .buttons-container div {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Optionnel : Style pour un bouton spécifique à gauche ou à droite */
+.buttons-container .left {
+  background-color: #6c63ff; /* Couleur du bouton de gauche */
+  color: white;
+}
+
+.buttons-container .right {
+  background-color: #f3f3f3; /* Couleur du bouton de droite */
+  color: #6c63ff; /* Couleur du texte du bouton de droite */
+}

@@ -1,0 +1,20 @@
+
+  <form (submit)="onSubmit()">
+    <h1>{{ isSignUp ? 'Inscription' : 'Connexion' }}</h1>
+
+    <app-champs message = "Nom d'utilisateur :" input_id = "username"></app-champs>
+    <app-champs message = "Mot de passe :" input_id = "password" hide="true"></app-champs>
+
+    <div *ngIf="isSignUp">
+      <app-champs message = "Email :" input_id = "email"></app-champs>
+      <app-champs message = "Nom :" input_id = "lastName"></app-champs>
+      <app-champs message = "Prenom :" input_id = "firstName"></app-champs>
+    </div>
+
+    <div class="buttons-container">
+      <button class="left" type="submit">{{ isSignUp ? 'S\'inscrire' : 'Se connecter' }}</button>
+      <div class="right" (click)="onSwitchMode()">
+        {{ isSignUp ? 'Déjà un compte ? Connectez-vous' : 'Pas encore inscrit ? Créez un compte' }}
+      </div>
+    </div>
+  </form>
