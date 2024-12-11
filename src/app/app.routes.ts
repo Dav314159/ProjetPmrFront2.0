@@ -4,6 +4,7 @@ import {PmrDetailsComponent} from "./pmr-details/pmr-details.component";
 import {Error404Component} from "./error404/error404.component";
 import {CarteComponent} from "./carte/carte.component";
 import {ConnexionComponent} from "./connexion/connexion.component";
+import {ProfilComponent} from "./profil/profil.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: "tablePmr", pathMatch: "full"},
@@ -11,5 +12,6 @@ export const routes: Routes = [
   {path: 'tablePmr', component: TableauPmrComponent},
   {path: 'carte', component: CarteComponent},
   {path: 'connexion', component: ConnexionComponent},
+  {path: 'profil', component: ProfilComponent},
   {path: '**', component: Error404Component}
 ];
