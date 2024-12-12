@@ -6,6 +6,7 @@ import {User} from "../models/User";
 import {userLogin} from "../../main";
 import {FormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-connexion',
@@ -81,25 +82,40 @@ export class ConnexionComponent {
       let prenom : HTMLInputElement = <HTMLInputElement>document.getElementById("firstname");
       let nom : HTMLInputElement = <HTMLInputElement>document.getElementById("lastname");
 
-      let dejaPris : boolean = this.userService.checkUsername(username.value);
-      if (dejaPris){
-        this.error = true;
-        this.messageErreur = "Ce nom d'utilisateur est deja utilisé. Peut etre est ce deja le votre, dans ce cas essayez de vous connecter ?";
-      }
-
       let user : User = new User(-1, username.value, password.value, nom.value, prenom.value, mail.value)
-      let erreurInscription : boolean = this.userService.addUser(user);
 
-      if (erreurInscription){
+      this.checkUsername(user);
+    }
+  }
+
+  checkUsername(user : User) {
+    this.userService.checkUsername(user.username).subscribe({
+      next: disponible => {
+        if (disponible) {
+          this.addUser(user);
+        } else {
+          this.error = true;
+          this.messageErreur = "Ce nom d'utilisateur est deja utilisé. Peut etre est ce deja le votre, dans ce cas essayez de vous connecter";
+          return;
+        }
+      },
+      error: error => {
+      }
+    });
+  }
+
+  addUser(user : User){
+    this.userService.addUser(user).subscribe({
+      next: data => {
+        userLogin.username = user.username;
+        userLogin.password = user.password;
+        this.router.navigate(['/profil']);
+      },
+      error: error => {
         this.error = true;
         this.messageErreur = "Erreur lors de l'inscription. Veuillez reessayer";
-      }
-      else{
-        userLogin.username = username.value;
-        userLogin.password = password.value;
-        this.router.navigate(['/profil']);
-      }
-    }
+      },
+    });
   }
 
   connexion(): void {
@@ -109,16 +125,19 @@ export class ConnexionComponent {
     let username : HTMLInputElement = <HTMLInputElement>document.getElementById("username");
     let password : HTMLInputElement = <HTMLInputElement>document.getElementById("password");
 
-    let correctLogin : boolean = this.userService.checkPassword(<string>username.value, <string>password.value);
-
-    if (correctLogin){
-      userLogin.username = username.value;
-      userLogin.password = password.value;
-      this.router.navigate(['/profil']);
-    }
-    else{
-      this.error = true;
-      this.messageErreur = "Le mot de passe ou nom d'utilisateur est incorrect";
-    }
+    this.userService.checkPassword(<string>username.value, <string>password.value).subscribe({
+      next : valide =>{
+        if (valide){
+          userLogin.username = username.value;
+          userLogin.password = password.value;
+          this.router.navigate(['/profil']);
+        }
+        else{
+          this.error = true;
+          this.messageErreur = "Le mot de passe ou nom d'utilisateur est incorrect";
+        }
+      },
+      error: error =>{}
+    });
   }
 }
