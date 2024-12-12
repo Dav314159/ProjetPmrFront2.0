@@ -12,21 +12,17 @@ export class UserService {
 
   constructor(private readonly http: HttpClient) { }
 
-  checkPassword(username : string, password : string): boolean
+  checkPassword(username : string, password : string): Observable<boolean>
   {
-    //todo hash password
-    console.log(username, password);
-    return true;
-    //return this.http.get<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${id}`);
+    return this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/checkLogin?username=${username}&password=${password}`);
   }
 
-  //renvoie si l'ajout s'est bien effectue
-  addUser(data : User) : boolean{
-    return false;
+  addUser(data : User) : Observable<User>{
+    return this.http.post<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/addUtilisateur`, data);
   }
 
-  checkUsername(username : string) : boolean{
-    return true;
+  checkUsername(username : string) : Observable<boolean>{
+    return this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/isUsernameAvailable?username=${username}`);
   }
 
 }
