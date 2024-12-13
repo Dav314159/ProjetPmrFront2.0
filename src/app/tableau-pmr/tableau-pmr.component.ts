@@ -1,58 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Pmr} from "../models/Pmr";
 import {PmrService} from "../services/pmr-service/pmr.service";
-import {DataSource} from '@angular/cdk/collections';
-import {Observable, ReplaySubject} from "rxjs";
-import {MatTableModule} from "@angular/material/table";
-import {ActivatedRoute, Router} from "@angular/router";
+import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {Router} from "@angular/router";
+import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
+import {MatSort, MatSortModule} from "@angular/material/sort";
 
 @Component({
   selector: 'app-tableau-pmr',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule],
   templateUrl: './tableau-pmr.component.html',
   styleUrl: './tableau-pmr.component.css'
 })
-export class TableauPmrComponent implements OnInit {
+export class TableauPmrComponent implements OnInit, AfterViewInit  {
   displayedColumns : string[] = ["idPmr", "name", "capacity", "description", "geoPoint"];
-  datasourcePmr = new PmrDataSource([]);
+  datasourcePmr = new MatTableDataSource<Pmr>();
 
   // Injection de dépendance
   constructor(private pmrService: PmrService,
               private router : Router) {
   }
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   ngOnInit() {
     this.pmrService.getAllPmr().subscribe({
       next: data => {
-        this.datasourcePmr.setData(data);
+        this.datasourcePmr.data = data;
       },
       error: error => { console.log('set data tableau error')}
       }
     )
   }
 
+  ngAfterViewInit() {
+    this.datasourcePmr.paginator = this.paginator;
+    this.datasourcePmr.sort = this.sort;
+  }
+
   onDetails(row : Pmr) :void {
     this.router.navigateByUrl('pmr-details/'+row.id);
-  }
-}
-
-
-class PmrDataSource extends DataSource<Pmr> {
-  private _dataStream = new ReplaySubject<Pmr[]>();
-
-  constructor(initialData: Pmr[]) {
-    super();
-    this.setData(initialData);
-  }
-
-  connect(): Observable<Pmr[]> {
-    return this._dataStream;
-  }
-
-  disconnect() {}
-
-  setData(data: Pmr[]) {
-    this._dataStream.next(data);
   }
 }

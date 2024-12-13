@@ -27,7 +27,7 @@ nav, div{
   padding: 0;
   margin: 0;
   height: 60px;
-  background : #c017ff;
+  background : rgba(170, 87, 181, 0.94);
   display: flex;
 }
 

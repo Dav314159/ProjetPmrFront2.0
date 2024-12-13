@@ -36,7 +36,7 @@ export class CarteComponent implements OnInit {
     })
   }
 
-  getCurrentPosition(): any {
+  setPosition(): any {
     return new Observable((observer: Subscriber<any>) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position: any) => {
@@ -59,10 +59,8 @@ export class CarteComponent implements OnInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
-    this.getCurrentPosition()
-      .subscribe((position: any) => {
-        this.map.flyTo([position.latitude, position.longitude], 13);
-      });
+    // On zoom la carte sur la ville de Tours
+    this.map.flyTo([47.3936111, 0.6891666666666667], 13);
   }
 
   updatePmrMarkers(): void {
