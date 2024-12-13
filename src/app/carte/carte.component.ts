@@ -83,6 +83,12 @@ export class CarteComponent implements OnInit {
       popup.setContent(this.createPopup(pmr));
       markerPmr.bindPopup( popup );
       markerPmr.addTo(this.map);
+
+      i++;
+      if (i > 50){
+        console.log("Limit de point fixé à 50");
+        break;
+      }
     }
   }
 
