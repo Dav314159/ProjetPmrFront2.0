@@ -1,5 +1,10 @@
 <nav>
-  <a routerLink='**' routerLinkActive="Active" [routerLinkActiveOptions]="{ exact: true } "><img src="./assets/logopmr.png" alt="Home " ></a>
-  <a routerLink='tablePmr' routerLinkActive="Active">Table</a>
-  <a routerLink='carte' routerLinkActive="Active">Carte</a>
+  <div>
+    <a routerLink='**' routerLinkActive="Active" [routerLinkActiveOptions]="{ exact: true } "><img src="./assets/logopmr.png" alt="Home " ></a>
+    <a routerLink='tablePmr' routerLinkActive="Active">Table</a>
+    <a routerLink='carte' routerLinkActive="Active">Carte</a>
+    <a routerLink='tableau_reservation' routerLinkActive="Active">Reservation</a>
+  </div>
+    <a *ngIf='userLogin.username==""' class = "connexion" routerLink='connexion' routerLinkActive="Active">Login</a>
+    <a *ngIf='userLogin.username!=""' class = "profil" routerLink='profil' routerLinkActive="Active">Profil</a>
 </nav>
