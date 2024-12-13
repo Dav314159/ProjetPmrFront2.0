@@ -1,6 +1,7 @@
 
   <form (ngSubmit) ="onSubmit($event)" id="form">
-    <h1>{{ isSignUp ? 'Inscription' : 'Connexion' }}</h1>
+    <h1 *ngIf="!isModification">{{ isSignUp ? 'Inscription' : 'Connexion' }}</h1>
+    <h1 *ngIf="isModification">Vos Informations</h1>
 
     <app-champs message = "Nom d'utilisateur :" input_id = "username"
                 regex="^[A-Za-z' -]{0,100}$"
@@ -9,7 +10,7 @@
                 regex="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,100}$"
                 erreurMessage="Le mot de passe doit contenir : 1 lettre majuscule, 1 lettre minuscule, 1 symbole, 1 chiffre, entre 8 et 100 caracteres"></app-champs>
 
-    <div *ngIf="isSignUp">
+    <div *ngIf="isSignUp || isModification">
       <app-champs message = "Email :" input_id = "mail"
                   regex="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                   erreurMessage="Il ne s'agit pas d'une adresse mail valide"></app-champs>
@@ -22,11 +23,18 @@
     </div>
 
     <div id="error" *ngIf="error"><p>{{messageErreur}}</p></div>
+    <div id="validation" *ngIf="validation"><p>{{messageSucces}}</p></div>
 
     <div class="buttons-container">
-      <button class="left" type="submit">{{ isSignUp ? 'S\'inscrire' : 'Se connecter' }}</button>
-      <div class="right" (click)="onSwitchMode()">
+
+      <button *ngIf="!isModification" class="left" type="submit">{{ isSignUp ? 'S\'inscrire' : 'Se connecter' }}</button>
+      <button *ngIf="isModification" class ="left" type="submit">Enregistrer les modifications</button>
+
+      <button type="button" class="right" (click)="onSwitchMode()" *ngIf="!isModification">
         {{ isSignUp ? 'Déjà un compte ? Connectez-vous' : 'Pas encore inscrit ? Créez un compte' }}
-      </div>
+      </button>
+      <button type="button" class="right" (click)="deconnexion()" *ngIf="isModification">
+        Deconnexion
+      </button>
     </div>
   </form>
