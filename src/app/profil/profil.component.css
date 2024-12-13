@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left, .right {
+  flex: 1; /* Divise l'espace disponible en parts égales */
+}
+
+.left {
+  border-right: 2px solid black; /* Bordure au milieu */
+}
