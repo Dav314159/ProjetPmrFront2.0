@@ -1,4 +1,4 @@
-import {Component, inject, QueryList, ViewChildren} from '@angular/core';
+import {booleanAttribute, Component, inject, Input, QueryList, ViewChildren} from '@angular/core';
 import {ChampsComponent} from "./champs/champs.component";
 import { CommonModule } from '@angular/common';
 import {UserService} from "../services/user-service/user.service";
@@ -24,10 +24,18 @@ export class ConnexionComponent {
 
   @ViewChildren(ChampsComponent) champsComponents!: QueryList<ChampsComponent>;
 
+  @Input({transform: booleanAttribute})
+  isModification: boolean = false;
+
   isSignUp: boolean = false;
+
   userService = inject(UserService);
+
   error : boolean = false;
   messageErreur : string = "Message d'erreur";
+
+  validation : boolean = false;
+  messageSucces : string = "Message de validation";
 
   verifRempli() : boolean {
     let rempli:boolean = true;
@@ -47,12 +55,13 @@ export class ConnexionComponent {
     e.preventDefault();
 
     if (!this.verifRempli()){
+      this.validation = false;
       this.error = true;
       this.messageErreur = "Tous les champs ne sont pas rempli";
       return;
     }
 
-    if (this.isSignUp) {
+    if (this.isSignUp || this.isModification) {
       this.inscription();
     } else {
       this.connexion();
@@ -72,6 +81,7 @@ export class ConnexionComponent {
     }
 
     if (!regexValide) {
+      this.validation = false;
       this.error = true;
       this.messageErreur = "Le format d'un ou plusieurs champs n'est pas respecté";
     }
@@ -92,15 +102,40 @@ export class ConnexionComponent {
     this.userService.checkUsername(user.username).subscribe({
       next: disponible => {
         if (disponible) {
-          this.addUser(user);
+          if (this.isModification){
+            this.updateUser(user);
+          }
+          else {
+            this.addUser(user);
+          }
         } else {
+          this.validation = false;
           this.error = true;
-          this.messageErreur = "Ce nom d'utilisateur est deja utilisé. Peut etre est ce deja le votre, dans ce cas essayez de vous connecter";
+          this.messageErreur = "Ce nom d'utilisateur est deja utilisé";
+          if (!this.isModification) this.messageErreur += ". Peut etre est ce deja le votre, dans ce cas essayez de vous connecter";
           return;
         }
       },
       error: error => {
       }
+    });
+  }
+
+  updateUser(user : User){
+    this.userService.updateUser(user).subscribe({
+      next: data => {
+        this.validation = true;
+        this.error = false;
+        this.messageSucces = "Modification bien prise en compte";
+
+        userLogin.username = user.username;
+        userLogin.password = user.password;
+      },
+      error: error => {
+        this.validation = false;
+        this.error = true;
+        this.messageErreur = "Erreur lors de l'inscription. Veuillez reessayer";
+      },
     });
   }
 
@@ -113,6 +148,7 @@ export class ConnexionComponent {
       },
       error: error => {
         this.error = true;
+        this.validation = false;
         this.messageErreur = "Erreur lors de l'inscription. Veuillez reessayer";
       },
     });
@@ -133,11 +169,18 @@ export class ConnexionComponent {
           this.router.navigate(['/profil']);
         }
         else{
+          this.validation = false;
           this.error = true;
           this.messageErreur = "Le mot de passe ou nom d'utilisateur est incorrect";
         }
       },
       error: error =>{}
     });
+  }
+
+  deconnexion() {
+    userLogin.username = "";
+    userLogin.password = "";
+    this.router.navigate(['/connexion']);
   }
 }
