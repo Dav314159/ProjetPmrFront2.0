@@ -27,3 +27,4 @@ export class PmrService {
     return this.http.put<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/updatePmr`, data);
   }
 }
+
