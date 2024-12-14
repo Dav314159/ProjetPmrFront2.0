@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {NgIf} from '@angular/common';
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {MatIcon} from "@angular/material/icon";
-import {userLogin} from "../../../main";
+import {UserService} from "../../services/user-service/user.service";
 
 @Component({
   selector: 'app-header',
@@ -17,6 +17,5 @@ import {userLogin} from "../../../main";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
-  protected readonly userLogin = userLogin;
+  userService = inject(UserService);
 }

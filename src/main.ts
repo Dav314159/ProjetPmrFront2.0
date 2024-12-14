@@ -5,7 +5,4 @@ import { AppComponent } from './app/app.component';
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
 
-export const userLogin = {
-  username: "",
-  password: ""
-};
+

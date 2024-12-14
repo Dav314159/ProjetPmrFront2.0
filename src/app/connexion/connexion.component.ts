@@ -3,7 +3,6 @@ import {ChampsComponent} from "./champs/champs.component";
 import { CommonModule } from '@angular/common';
 import {UserService} from "../services/user-service/user.service";
 import {User} from "../models/User";
-import {userLogin} from "../../main";
 import {FormsModule} from "@angular/forms";
 import { Router } from '@angular/router';
 import {error} from "@angular/compiler-cli/src/transformers/util";
@@ -101,7 +100,7 @@ export class ConnexionComponent {
   checkUsername(user : User) {
     this.userService.checkUsername(user.username).subscribe({
       next: disponible => {
-        if (disponible) {
+        if (disponible || user.username == this.userService.username) {
           if (this.isModification){
             this.updateUser(user);
           }
@@ -128,8 +127,8 @@ export class ConnexionComponent {
         this.error = false;
         this.messageSucces = "Modification bien prise en compte";
 
-        userLogin.username = user.username;
-        userLogin.password = user.password;
+        this.userService.username = user.username;
+        this.userService.password = user.password;
       },
       error: error => {
         this.validation = false;
@@ -142,8 +141,8 @@ export class ConnexionComponent {
   addUser(user : User){
     this.userService.addUser(user).subscribe({
       next: data => {
-        userLogin.username = user.username;
-        userLogin.password = user.password;
+        this.userService.username = user.username;
+        this.userService.password = user.password;
         this.router.navigate(['/profil']);
       },
       error: error => {
@@ -164,8 +163,8 @@ export class ConnexionComponent {
     this.userService.checkPassword(<string>username.value, <string>password.value).subscribe({
       next : valide =>{
         if (valide){
-          userLogin.username = username.value;
-          userLogin.password = password.value;
+          this.userService.username = username.value;
+          this.userService.password = password.value;
           this.router.navigate(['/profil']);
         }
         else{
@@ -179,8 +178,8 @@ export class ConnexionComponent {
   }
 
   deconnexion() {
-    userLogin.username = "";
-    userLogin.password = "";
+    this.userService.username = "";
+    this.userService.password = "";
     this.router.navigate(['/connexion']);
   }
 }
