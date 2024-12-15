@@ -9,6 +9,7 @@ a {
   }
   font-size: 50px;
   line-height: 70px;
+
 }
 a:not(:last-child){
   border-right: black solid 5px;
@@ -27,7 +28,7 @@ nav, div{
   padding: 0;
   margin: 0;
   height: 60px;
-  background : rgba(170, 87, 181, 0.94);
+  background : rgba(170, 87, 181, 1);
   display: flex;
 }
 

@@ -14,7 +14,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrl: './tableau_reservation.component.css'
 })
 export class Tableau_reservationComponent implements OnInit {
-  displayedColumns : string[] = ["idPmr", "idUtilisateur", "reservation"];
+  displayedColumns : string[] = ["pmr_id", "utilisateur_id", "reservation"];
   datasourceReservation = new ReservationDataSource([]);
 
   // Injection de dépendance
