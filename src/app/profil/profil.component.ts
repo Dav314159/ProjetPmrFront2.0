@@ -1,5 +1,4 @@
 import {Component, inject} from '@angular/core';
-import {userLogin} from "../../main";
 import {Router} from "@angular/router";
 import {ChampsComponent} from "../connexion/champs/champs.component";
 import {NgIf} from "@angular/common";
@@ -23,7 +22,7 @@ export class ProfilComponent {
 
 
   constructor(private router: Router) {
-    if (userLogin.username == "") {
+    if (this.userService.username == "") {
       this.router.navigate(['/connexion']);
     }
     this.remplirChamps();
