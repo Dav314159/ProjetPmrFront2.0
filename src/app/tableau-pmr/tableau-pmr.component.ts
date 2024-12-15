@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Pmr} from "../models/Pmr";
 import {PmrService} from "../services/pmr-service/pmr.service";
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatCell, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {Router} from "@angular/router";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {MatSort, MatSortModule} from "@angular/material/sort";
+import {MatSort, MatSortHeader, MatSortModule, Sort} from "@angular/material/sort";
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -15,7 +15,7 @@ import {NgIf} from "@angular/common";
   styleUrl: './tableau-pmr.component.css'
 })
 export class TableauPmrComponent implements OnInit, AfterViewInit  {
-  displayedColumns : string[] = ["idPmr", "name", "capacity", "description", "geoPoint"];
+  displayedColumns : string[] = ["id", "nom", "quantite", "description", "point_geo"];
   datasourcePmr = new MatTableDataSource<Pmr>();
 
   // Injection de dépendance
@@ -27,18 +27,27 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
-    this.pmrService.getAllPmr().subscribe({
-      next: data => {
+    this.datasourcePmr.data = [new Pmr(1,"",0,"","")];
+    this.pmrService.getAllPmr().subscribe(
+      data => {
         this.datasourcePmr.data = data;
-      },
-      error: error => { console.log('set data tableau error')}
+        console.log("Data loaded")
       }
+      /*{
+        next: data => {
+          this.datasourcePmr.data = data;
+          console.log("Data loaded")
+        },
+        error: error => { console.log('set data tableau error')}
+      }*/
+
     )
   }
 
   ngAfterViewInit() {
-    this.datasourcePmr.paginator = this.paginator;
+    console.log("sort et pagination");
     this.datasourcePmr.sort = this.sort;
+    this.datasourcePmr.paginator = this.paginator;
   }
 
   makeReservation() {
@@ -48,4 +57,5 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
   onDetails(row : Pmr) :void {
     this.router.navigateByUrl('pmr-details/'+row.id);
   }
+
 }
