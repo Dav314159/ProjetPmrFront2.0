@@ -28,24 +28,19 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
 
   ngOnInit() {
     this.datasourcePmr.data = [new Pmr(1,"",0,"","")];
-    this.pmrService.getAllPmr().subscribe(
-      data => {
-        this.datasourcePmr.data = data;
-        console.log("Data loaded")
-      }
-      /*{
+    this.pmrService.getAllPmr().subscribe({
         next: data => {
           this.datasourcePmr.data = data;
-          console.log("Data loaded")
         },
-        error: error => { console.log('set data tableau error')}
-      }*/
+        error: error => {
+          console.log('set data tableau error')
+        }
+      }
 
     )
   }
 
   ngAfterViewInit() {
-    console.log("sort et pagination");
     this.datasourcePmr.sort = this.sort;
     this.datasourcePmr.paginator = this.paginator;
   }

@@ -16,7 +16,7 @@ export class ReservationService {
 
   getAllReservation(): Observable<Reservation[]>
   {
-    return this.http.get<Reservation[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllReservation`);
+    return this.http.get<Reservation[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getAllReservations`);
   }
 
   getReservation(pmr_id: number): Observable<Reservation>
