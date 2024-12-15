@@ -2,6 +2,21 @@
   background-color: lightgrey;
 }
 
-.reservation {
-
+.button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .reservation{
+    background-color: #6c63ff; /* Couleur du bouton */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .reservation:hover{
+    background-color: #3796af;
+  }
 }
