@@ -31,9 +31,9 @@ export class MakeReservationComponent {
   @Input({transform: booleanAttribute})
   isModification: boolean = false;
 
-  ReservationService = inject(ReservationService);
-  UserService = inject(UserService);
-  PmrService = inject(PmrService);
+  reservationService = inject(ReservationService);
+  userService = inject(UserService);
+  pmrService = inject(PmrService);
 
   error : boolean = false;
   messageErreur : string = "Message d'erreur";
@@ -68,10 +68,12 @@ export class MakeReservationComponent {
       return;
     }
 
-    if (this.isModification) {
-      this.modifier();
-    } else {
-      this.reserver();
+    let valide : boolean = this.verifRegex();
+    if (valide){
+      let pmr_id : HTMLInputElement = <HTMLInputElement>document.getElementById("pmr_id");
+      let username : HTMLInputElement = <HTMLInputElement>document.getElementById("username");
+      let reservation : HTMLInputElement = <HTMLInputElement>document.getElementById("reservation");
+      this.checkPmrIdAndUsername(pmr_id.value,username.value,reservation.value);
     }
   }
 
@@ -79,7 +81,51 @@ export class MakeReservationComponent {
     this.isModification = !this.isModification;
   }
 
-  modifier() : void{
+  checkPmrIdAndUsername(pmr_id:string, username:string, reservation:string){
+    this.pmrService.checkpmrplace(parseInt(pmr_id)).subscribe({
+      next : pmr =>{
+        if (pmr != null){
+          this.checkUsername(pmr_id, pmr.quantite,username,reservation);
+        }
+        else{
+          this.validation = false;
+          this.error = true;
+          this.messageErreur = "Le pmr id est incorrect";
+        }
+      }
+    })
+  }
+
+  checkUsername(pmr_id:string, pmr_place : number, username:string, reservation:string){
+    this.userService.getUserByusername(username).subscribe({
+      next : user =>{
+        if (user != null){
+          if (!this.checkPlace(pmr_place, parseInt(reservation))){
+            return;
+          }
+
+          let reservationvar: Reservation = new Reservation(parseInt(pmr_id), user.id, parseInt(reservation))
+          this.validation = true;
+          this.error = false;
+
+          if (this.isModification) {
+            this.updateReservation(reservationvar)
+          } else {
+            this.addReservation(reservationvar)
+          }
+
+          this.router.navigate(['/tablePmr']);
+        }
+        else{
+          this.validation = false;
+          this.error = true;
+          this.messageErreur = "Le username est incorrect";
+        }
+      }
+    })
+  }
+
+  verifRegex(){
     let regexValide : boolean = true;
 
     const correctValues: boolean[] = this.champsComponents.map(champ => champ.correct);
@@ -92,90 +138,22 @@ export class MakeReservationComponent {
       this.error = true;
       this.messageErreur = "Le format d'un ou plusieurs champs n'est pas respecté";
     }
-    else{
-      let pmr_id : HTMLInputElement = <HTMLInputElement>document.getElementById("pmr_id");
-      let username : HTMLInputElement = <HTMLInputElement>document.getElementById("username");
-      let reservation : HTMLInputElement = <HTMLInputElement>document.getElementById("reservation");
 
-
-
-      if(this.ReservationService.checkdata(parseInt(pmr_id.value) , <string>username.value   )){
-        this.getUseridByUsername(username);
-        let utilisateur_id: number = this.userid;
-        this.checkpmrplace(parseInt(pmr_id.value)  )
-        if (this.pmrplace <= (  parseInt(reservation.value)  )) {
-
-          let reservationvar: Reservation = new Reservation(  parseInt(pmr_id.value)  , utilisateur_id,   parseInt(reservation.value)  )
-          this.validation = true;
-          this.error = false;
-          this.updateReservation(reservationvar)
-          this.router.navigate(['/tablePmr']);
-        }else {
-          this.validation = false;
-          this.error = true;
-          this.messageErreur = "Le pmr n'a pas autant de place réduiser le nombre de places";
-        }
-      }
-      else{
-        this.validation = false;
-        this.error = true;
-        this.messageErreur = "Le pmr id, le username ou le nombre de place est incorrect";
-      }
-
-
-
-    }
+    return regexValide;
   }
 
-  reserver(): void {
-
-    let regexValide: boolean = true;
-
-    const correctValues: boolean[] = this.champsComponents.map(champ => champ.correct);
-    for (let i = 0; i < this.champsComponents.length; i++) {
-      regexValide = regexValide && (correctValues[i]);
-    }
-
-    if (!regexValide) {
+  checkPlace(place : number, reservation : number) : boolean{
+    if (place > reservation) {
       this.validation = false;
       this.error = true;
-      this.messageErreur = "Le format d'un ou plusieurs champs n'est pas respecté";
-    } else {
-      let pmr_id: HTMLInputElement = <HTMLInputElement>document.getElementById("pmr_id");
-      let username: HTMLInputElement = <HTMLInputElement>document.getElementById("username");
-      let reservation: HTMLInputElement = <HTMLInputElement>document.getElementById("reservation");
-
-
-      if (this.ReservationService.checkdata(  parseInt(pmr_id.value)  , <string>username.value   )) {
-        this.getUseridByUsername(username);
-        let utilisateur_id: number = this.userid;
-        this.checkpmrplace(  parseInt(pmr_id.value) )
-        if (this.pmrplace <=   parseInt(reservation.value)  ){
-
-          let reservationvar: Reservation = new Reservation(  parseInt(pmr_id.value), utilisateur_id,   parseInt(reservation.value))
-
-          this.validation = true;
-          this.error = false;
-          this.addReservation(reservationvar)
-          this.router.navigate(['/tablePmr']);
-
-        }else {
-          this.validation = false;
-          this.error = true;
-          this.messageErreur = "Le pmr n'a pas autant de place réduiser le nombre de places";
-        }
-
-      } else {
-        this.validation = false;
-        this.error = true;
-        this.messageErreur = "Le pmr id ou le username est incorrect";
-      }
+      this.messageErreur = "Le pmr n'a pas autant de place réduiser le nombre de places";
+      return false;
     }
+    return true;
   }
 
-
   updateReservation(reservation : Reservation){
-    this.ReservationService.updateReservation(reservation).subscribe({
+    this.reservationService.updateReservation(reservation).subscribe({
       next: data => {
         this.validation = true;
         this.error = false;
@@ -191,7 +169,7 @@ export class MakeReservationComponent {
   }
 
   addReservation(reservation : Reservation){
-    this.ReservationService.addReservation(reservation).subscribe({
+    this.reservationService.addReservation(reservation).subscribe({
       next: data => {
         this.validation = true;
         this.error = false;
@@ -204,36 +182,5 @@ export class MakeReservationComponent {
         this.messageErreur = "Erreur lors de la reservation. Veuillez reessayer";
       },
     });
-  }
-
-  private getUseridByUsername(username: HTMLInputElement) {
-     this.UserService.getUserByusername(<string>username.value   ).subscribe(
-      {
-        next: (response: User) => {
-          this.userid = response.id;
-
-        },
-        error: error => {
-          this.validation = false;
-          this.error = true;
-          this.messageErreur = "Le username est incorrect";
-        }
-      }
-    )
-
-  }
-
-  private checkpmrplace(pmr_id: number)  {
-    this.PmrService.checkpmrplace(pmr_id).subscribe({
-      next: (response: Pmr) => {
-        this.pmrplace = response.quantite;
-
-      },
-      error: error => {
-        this.validation = false;
-        this.error = true;
-        this.messageErreur = "Le numero du pmr est incorrect";
-      }
-    })
   }
 }
