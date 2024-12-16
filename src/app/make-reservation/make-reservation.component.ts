@@ -84,43 +84,40 @@ export class MakeReservationComponent {
   checkPmrIdAndUsername(pmr_id:string, username:string, reservation:string){
     this.pmrService.checkpmrplace(parseInt(pmr_id)).subscribe({
       next : pmr =>{
-        if (pmr != null){
-          this.checkUsername(pmr_id, pmr.quantite,username,reservation);
-        }
-        else{
-          this.validation = false;
-          this.error = true;
-          this.messageErreur = "Le pmr id est incorrect";
-        }
+        this.checkUsername(pmr_id, pmr.quantite,username,reservation);
+      },
+      error: error => {
+        this.validation = false;
+        this.error = true;
+        this.messageErreur = "Le pmr id est incorrect";
       }
     })
   }
 
   checkUsername(pmr_id:string, pmr_place : number, username:string, reservation:string){
-    this.userService.getUserByusername(username).subscribe({
-      next : user =>{
-        if (user != null){
-          if (!this.checkPlace(pmr_place, parseInt(reservation))){
-            return;
-          }
-
-          let reservationvar: Reservation = new Reservation(parseInt(pmr_id), user.id, parseInt(reservation))
-          this.validation = true;
-          this.error = false;
-
-          if (this.isModification) {
-            this.updateReservation(reservationvar)
-          } else {
-            this.addReservation(reservationvar)
-          }
-
-          this.router.navigate(['/tablePmr']);
+    this.userService.getUserIdByusername(username).subscribe({
+      next : userId =>{
+        if (!this.checkPlace(pmr_place, parseInt(reservation))){
+          return;
         }
-        else{
-          this.validation = false;
-          this.error = true;
-          this.messageErreur = "Le username est incorrect";
+
+        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), userId, parseInt(reservation))
+        this.validation = true;
+        this.error = false;
+
+        if (this.isModification) {
+          this.updateReservation(reservationvar)
+        } else {
+          this.addReservation(reservationvar)
         }
+
+        this.router.navigate(['/tablePmr']);
+
+      },
+      error: error => {
+        this.validation = false;
+        this.error = true;
+        this.messageErreur = "Le username est incorrect";
       }
     })
   }
