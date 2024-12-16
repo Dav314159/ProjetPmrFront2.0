@@ -29,20 +29,23 @@ export class ReservationService {
     return this.http.put<Reservation>(`${this.API_URL}/${this.API_ENTITY_NAME}/updateReservation`, data);
   }
 
-  checkpmrid(pmrid : number) : Observable<boolean>{
-    return this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?pmr_id=${pmrid}`);
-  }
-
-  checkUsername(username : string) : Observable<boolean>{
-    return this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/isUsernameAvailable?username=${username}`);
-  }
-
   addReservation(data : Reservation) : Observable<Reservation>{
     return this.http.post<Reservation>(`${this.API_URL}/${this.API_ENTITY_NAME}/addReservation`, data);
   }
 
   checkdata(pmr_id: number, username: string) : boolean {
-    return (this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?pmr_id=${pmr_id}`) &&
-      !this.http.get<boolean>(`${this.API_URL}/${this.API_ENTITY_NAME}/isUsernameAvailable?username=${username}`));
+    let idExist : boolean =false;
+    let UsernameExist : boolean = false;
+    let idAndUsernameExist : boolean = true;
+    this.http.get<boolean>(`${this.API_URL}/pmr/isPmrCreate?pmr_id=${pmr_id}`).subscribe({
+      next: id => {
+        idExist = id;
+      }
+    });
+    this.http.get<boolean>(`${this.API_URL}/utilisateur/isUsernameAvailable?username=${username}`).subscribe({
+      next: disponible => {
+        UsernameExist = disponible;}});
+    idAndUsernameExist = (idExist && UsernameExist);
+    return (idAndUsernameExist)
   }
 }

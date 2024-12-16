@@ -99,13 +99,13 @@ export class MakeReservationComponent {
 
 
 
-      if(this.ReservationService.checkdata(pmr_id.value as unknown as number, username as unknown as string)){
+      if(this.ReservationService.checkdata(parseInt(pmr_id.value) , <string>username.value   )){
         this.getUseridByUsername(username);
         let utilisateur_id: number = this.userid;
-        this.checkpmrplace(pmr_id.value as unknown as number)
-        if (this.pmrplace <= (reservation.value as unknown as number)) {
+        this.checkpmrplace(parseInt(pmr_id.value)  )
+        if (this.pmrplace <= (  parseInt(reservation.value)  )) {
 
-          let reservationvar: Reservation = new Reservation(pmr_id.value as unknown as number, utilisateur_id, reservation.value as unknown as number)
+          let reservationvar: Reservation = new Reservation(  parseInt(pmr_id.value)  , utilisateur_id,   parseInt(reservation.value)  )
           this.validation = true;
           this.error = false;
           this.updateReservation(reservationvar)
@@ -146,13 +146,13 @@ export class MakeReservationComponent {
       let reservation: HTMLInputElement = <HTMLInputElement>document.getElementById("reservation");
 
 
-      if (this.ReservationService.checkdata(pmr_id.value as unknown as number, username as unknown as string)) {
+      if (this.ReservationService.checkdata(  parseInt(pmr_id.value)  , <string>username.value   )) {
         this.getUseridByUsername(username);
         let utilisateur_id: number = this.userid;
-        this.checkpmrplace(pmr_id.value as unknown as number)
-        if (this.pmrplace <= (reservation.value as unknown as number)){
+        this.checkpmrplace(  parseInt(pmr_id.value) )
+        if (this.pmrplace <=   parseInt(reservation.value)  ){
 
-          let reservationvar: Reservation = new Reservation(pmr_id.value as unknown as number, utilisateur_id, reservation.value as unknown as number)
+          let reservationvar: Reservation = new Reservation(  parseInt(pmr_id.value), utilisateur_id,   parseInt(reservation.value))
 
           this.validation = true;
           this.error = false;
@@ -168,7 +168,7 @@ export class MakeReservationComponent {
       } else {
         this.validation = false;
         this.error = true;
-        this.messageErreur = "Le pmr id, le username est incorrect";
+        this.messageErreur = "Le pmr id ou le username est incorrect";
       }
     }
   }
@@ -207,10 +207,9 @@ export class MakeReservationComponent {
   }
 
   private getUseridByUsername(username: HTMLInputElement) {
-     this.UserService.getUserByusername(username as unknown as string).subscribe(
+     this.UserService.getUserByusername(<string>username.value   ).subscribe(
       {
         next: (response: User) => {
-          console.log("next ", response);
           this.userid = response.id;
 
         },
@@ -227,7 +226,6 @@ export class MakeReservationComponent {
   private checkpmrplace(pmr_id: number)  {
     this.PmrService.checkpmrplace(pmr_id).subscribe({
       next: (response: Pmr) => {
-        console.log("next ", response);
         this.pmrplace = response.quantite;
 
       },
