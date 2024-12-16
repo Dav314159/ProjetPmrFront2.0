@@ -40,6 +40,10 @@ export class UserService {
     return this.http.post<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUtilisateurByLogin`, user);
   }
 
+  getUserByusername(username : string) : Observable<User>{
+    return this.http.get<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUser?username=${username}`);
+  }
+
   getPmrReservation(): Observable<Pmr[]>
   {
     let user:User = new User(-1,this.username, this.password, "","","");

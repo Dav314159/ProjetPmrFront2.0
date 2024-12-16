@@ -1,21 +1,22 @@
 import {AfterViewInit, Component, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Pmr} from "../models/Pmr";
 import {PmrService} from "../services/pmr-service/pmr.service";
-import {MatTableDataSource, MatTableModule} from "@angular/material/table";
+import {MatCell, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {Router} from "@angular/router";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
-import {MatSort, MatSortModule} from "@angular/material/sort";
 import {UserService} from "../services/user-service/user.service";
+import {MatSort, MatSortHeader, MatSortModule, Sort} from "@angular/material/sort";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-tableau-pmr',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, NgIf],
   templateUrl: './tableau-pmr.component.html',
   styleUrl: './tableau-pmr.component.css'
 })
 export class TableauPmrComponent implements OnInit, AfterViewInit  {
-  displayedColumns : string[] = ["idPmr", "name", "capacity", "description", "geoPoint"];
+  displayedColumns : string[] = ["id", "nom", "quantite", "description", "point_geo"];
   datasourcePmr = new MatTableDataSource<Pmr>();
 
   @Input()
@@ -41,6 +42,7 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
   }
 
   fillWithAll() {
+    this.datasourcePmr.data = [new Pmr(1,"",0,"","")];
     this.pmrService.getAllPmr().subscribe({
         next: data => {
           this.datasourcePmr.data = data;
@@ -61,8 +63,12 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
   }
 
   ngAfterViewInit() {
-    this.datasourcePmr.paginator = this.paginator;
     this.datasourcePmr.sort = this.sort;
+    this.datasourcePmr.paginator = this.paginator;
+  }
+
+  makeReservation() {
+    this.router.navigateByUrl('make-reservation')
   }
 
   onDetails(row : Pmr) :void {

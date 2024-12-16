@@ -26,5 +26,10 @@ export class PmrService {
   {
     return this.http.put<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/updatePmr`, data);
   }
+
+
+  checkpmrplace(pmr_id: number): Observable<Pmr> {
+    return this.http.get<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${pmr_id}`)
+  }
 }
 

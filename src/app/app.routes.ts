@@ -6,6 +6,7 @@ import {CarteComponent} from "./carte/carte.component";
 import {ConnexionComponent} from "./connexion/connexion.component";
 import {ProfilComponent} from "./profil/profil.component";
 import {Tableau_reservationComponent} from "./tableau_reservation/tableau_reservation.component";
+import {MakeReservationComponent} from "./make-reservation/make-reservation.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: "tablePmr", pathMatch: "full"},
@@ -13,6 +14,7 @@ export const routes: Routes = [
   {path: 'tablePmr', component: TableauPmrComponent},
   {path: 'carte', component: CarteComponent},
   {path: 'tableau_reservation',component: Tableau_reservationComponent},
+  {path: 'make-reservation', component: MakeReservationComponent},
 
 
 
