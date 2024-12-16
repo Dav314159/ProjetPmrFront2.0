@@ -40,13 +40,13 @@ export class UserService {
     return this.http.post<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUtilisateurByLogin`, user);
   }
 
-  getUserByusername(username : string) : Observable<User>{
-    return this.http.get<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUser?username=${username}`);
-  }
-
   getPmrReservation(): Observable<Pmr[]>
   {
     let user:User = new User(-1,this.username, this.password, "","","");
     return this.http.post<Pmr[]>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmrReservation`, user);
+  }
+
+  getUserIdByusername(username: string) {
+    return this.http.get<number>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUserIdByusername?username=${username}`);
   }
 }
