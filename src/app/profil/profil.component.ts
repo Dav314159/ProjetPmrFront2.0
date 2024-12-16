@@ -4,6 +4,7 @@ import {ChampsComponent} from "../connexion/champs/champs.component";
 import {NgIf} from "@angular/common";
 import {ConnexionComponent} from "../connexion/connexion.component";
 import {UserService} from "../services/user-service/user.service";
+import {TableauPmrComponent} from "../tableau-pmr/tableau-pmr.component";
 
 
 @Component({
@@ -12,7 +13,8 @@ import {UserService} from "../services/user-service/user.service";
   imports: [
     ChampsComponent,
     NgIf,
-    ConnexionComponent
+    ConnexionComponent,
+    TableauPmrComponent
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'
