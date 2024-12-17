@@ -47,6 +47,6 @@ export class UserService {
   }
 
   getUserIdByusername(username: string) {
-    return this.http.get<User>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUserIdByusername?username=${username}`);
+    return this.http.get<number>(`${this.API_URL}/${this.API_ENTITY_NAME}/getUserIdByusername?username=${username}`);
   }
 }

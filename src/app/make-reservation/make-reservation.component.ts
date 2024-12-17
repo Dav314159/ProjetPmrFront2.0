@@ -96,12 +96,12 @@ export class MakeReservationComponent {
 
   checkUsername(pmr_id:string, pmr_place : number, username:string, reservation:string){
     this.userService.getUserIdByusername(username).subscribe({
-      next : user =>{
+      next : userId =>{
         if (!this.checkPlace(pmr_place, parseInt(reservation))){
           return;
         }
 
-        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), user.id, parseInt(reservation))
+        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), userId, parseInt(reservation))
         this.validation = true;
         this.error = false;
 
@@ -110,9 +110,6 @@ export class MakeReservationComponent {
         } else {
           this.addReservation(reservationvar)
         }
-
-        this.router.navigate(['/tablePmr']);
-
       },
       error: error => {
         this.validation = false;
@@ -140,7 +137,7 @@ export class MakeReservationComponent {
   }
 
   checkPlace(place : number, reservation : number) : boolean{
-    if (place > reservation) {
+    if (place < reservation) {
       this.validation = false;
       this.error = true;
       this.messageErreur = "Le pmr n'a pas autant de place réduiser le nombre de places";
