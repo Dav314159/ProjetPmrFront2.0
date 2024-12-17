@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {booleanAttribute, Component, Input, OnInit} from '@angular/core';
 import {Reservation} from "../models/Reservation";
 import {ReservationService} from "../services/reservation-service/reservation.service";
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from "rxjs";
 import {MatTableModule} from "@angular/material/table";
 import {ActivatedRoute, Router} from "@angular/router";
+import {UserService} from "../services/user-service/user.service";
 
 @Component({
   selector: 'app-tableau_reservation',
@@ -14,16 +15,17 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrl: './tableau_reservation.component.css'
 })
 export class Tableau_reservationComponent implements OnInit {
-  displayedColumns : string[] = ["idPmr", "idUtilisateur", "reservation"];
+  displayedColumns : string[] = ["nom", "description", "reservation"];
   datasourceReservation = new ReservationDataSource([]);
 
   // Injection de dépendance
   constructor(private ReservationService: ReservationService,
+              private userService: UserService,
               private router : Router) {
   }
 
   ngOnInit() {
-    this.ReservationService.getAllReservation().subscribe({
+    this.ReservationService.getAllReservationByUsername(this.userService.username).subscribe({
         next: data => {
           this.datasourceReservation.setData(data);
         },
