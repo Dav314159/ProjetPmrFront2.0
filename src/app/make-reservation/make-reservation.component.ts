@@ -101,7 +101,7 @@ export class MakeReservationComponent {
           return;
         }
 
-        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), userId, parseInt(reservation))
+        let reservationvar: Reservation = new Reservation(userId, parseInt(pmr_id), parseInt(reservation))
         this.validation = true;
         this.error = false;
 

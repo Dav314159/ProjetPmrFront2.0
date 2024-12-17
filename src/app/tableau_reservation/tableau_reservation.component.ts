@@ -35,7 +35,7 @@ export class Tableau_reservationComponent implements OnInit {
   }
 
   onDetails(row : Reservation) :void {
-    this.router.navigateByUrl('reservation-details/'+row.pmr_id);
+    this.router.navigateByUrl('reservation-details/'+row.pmrId);
   }
 }
 
