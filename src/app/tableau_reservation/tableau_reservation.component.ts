@@ -27,7 +27,7 @@ export class Tableau_reservationComponent implements OnInit {
         next: data => {
           this.datasourceReservation.setData(data);
         },
-        error: error => { console.log('set data tableau error')}
+        error: error => { console.log('set data tableau error') }
       }
     )
   }

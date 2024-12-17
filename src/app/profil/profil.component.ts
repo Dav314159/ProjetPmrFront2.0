@@ -5,6 +5,7 @@ import {NgIf} from "@angular/common";
 import {ConnexionComponent} from "../connexion/connexion.component";
 import {UserService} from "../services/user-service/user.service";
 import {TableauPmrComponent} from "../tableau-pmr/tableau-pmr.component";
+import {Tableau_reservationComponent} from "../tableau_reservation/tableau_reservation.component";
 
 
 @Component({
@@ -14,7 +15,7 @@ import {TableauPmrComponent} from "../tableau-pmr/tableau-pmr.component";
     ChampsComponent,
     NgIf,
     ConnexionComponent,
-    TableauPmrComponent
+    Tableau_reservationComponent
   ],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.css'
