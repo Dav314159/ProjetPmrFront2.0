@@ -96,12 +96,12 @@ export class MakeReservationComponent {
 
   checkUsername(pmr_id:string, pmr_place : number, username:string, reservation:string){
     this.userService.getUserIdByusername(username).subscribe({
-      next : userId =>{
+      next : user =>{
         if (!this.checkPlace(pmr_place, parseInt(reservation))){
           return;
         }
 
-        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), userId, parseInt(reservation))
+        let reservationvar: Reservation = new Reservation(parseInt(pmr_id), user.id, parseInt(reservation))
         this.validation = true;
         this.error = false;
 
