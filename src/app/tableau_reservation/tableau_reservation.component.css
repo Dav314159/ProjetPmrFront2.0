@@ -1,3 +1,24 @@
 th {
   background-color: rgba(170, 87, 181, 0.22) !important;
 }
+
+.button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .reservation{
+    background-color: #55a84a; /* Couleur du bouton */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 1%;
+  }
+  .reservation:hover{
+    background-color: #9eec94;
+    color: #3e7836;
+  }
+}

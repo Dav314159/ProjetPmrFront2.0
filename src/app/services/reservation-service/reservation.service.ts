@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Reservation} from "../../models/Reservation";
+import {ReservationFull} from "../../models/ReservationFull";
 
 
 @Injectable({
@@ -36,5 +37,16 @@ export class ReservationService {
 
   addReservation(data : Reservation) : Observable<Reservation>{
     return this.http.post<Reservation>(`${this.API_URL}/${this.API_ENTITY_NAME}/addReservation`, data);
+  }
+
+  deleteReservation(data : ReservationFull) : Observable<Reservation> {
+    const reserv = new Reservation(data.utilisateur.id, data.pmr.id, 0);
+    console.log(reserv)
+    //this.http.delete(`${this.API_URL}/${this.API_ENTITY_NAME}/deleteReservation`, body:reserv)
+    /*console.log(`${this.API_URL}/${this.API_ENTITY_NAME}/deleteReservation` == 'http://localhost:8080/reservation/deleteReservation')
+    if (this.http.post<Reservation>(`${this.API_URL}/${this.API_ENTITY_NAME}/deleteReservation`, reserv)){
+      console.log("URL OK");
+    }*/
+    return this.http.post<Reservation>(`${this.API_URL}/${this.API_ENTITY_NAME}/deleteReservation`, reserv);
   }
 }

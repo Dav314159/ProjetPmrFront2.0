@@ -64,7 +64,7 @@ export class MakeReservationComponent {
     if (!this.verifRempli()){
       this.validation = false;
       this.error = true;
-      this.messageErreur = "Tous les champs ne sont pas rempli";
+      this.messageErreur = "Tous les champs ne sont pas remplis";
       return;
     }
 
@@ -89,7 +89,7 @@ export class MakeReservationComponent {
       error: error => {
         this.validation = false;
         this.error = true;
-        this.messageErreur = "Le pmr id est incorrect";
+        this.messageErreur = "L'identifiant du stationnement pmr est incorrect";
       }
     })
   }
@@ -114,7 +114,7 @@ export class MakeReservationComponent {
       error: error => {
         this.validation = false;
         this.error = true;
-        this.messageErreur = "Le username est incorrect";
+        this.messageErreur = "Le nom d'utilisateur est incorrect";
       }
     })
   }
@@ -140,7 +140,7 @@ export class MakeReservationComponent {
     if (place < reservation) {
       this.validation = false;
       this.error = true;
-      this.messageErreur = "Le pmr n'a pas autant de place réduiser le nombre de places";
+      this.messageErreur = "Il n'y a pas assez de places pmr à ce stationnement.";
       return false;
     }
     return true;
@@ -157,7 +157,7 @@ export class MakeReservationComponent {
       error: error => {
         this.validation = false;
         this.error = true;
-        this.messageErreur = "Erreur lors de la modification des données. Veuillez reessayer";
+        this.messageErreur = "Erreur lors de la modification des données. Veuillez réessayer";
       },
     });
   }
@@ -173,7 +173,7 @@ export class MakeReservationComponent {
       error: error => {
         this.error = true;
         this.validation = false;
-        this.messageErreur = "Erreur lors de la reservation. Veuillez reessayer";
+        this.messageErreur = "Erreur lors de la réservation. Veuillez réessayer";
       },
     });
   }

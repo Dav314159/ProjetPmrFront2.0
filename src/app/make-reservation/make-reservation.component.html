@@ -2,13 +2,13 @@
 <form (ngSubmit) ="onSubmit($event)" id="form">
   <h1 >{{ isModification ? 'Modifier une réservation' : 'Faire une réservation' }}</h1>
 
-  <app-champs message = "Numéro de Pmr :" input_id = "pmr_id"
+  <app-champs message = "Numéro de stationnement Pmr :" input_id = "pmr_id"
               regex="^[0-9]{0,5}$"
-              erreurMessage="Le numéro de Pmr ne doit contenir que des chiffres , et faire moins de 5 carcteres"></app-champs>
-  <app-champs message = "Nom d'utilisateur pour la reservation :" input_id = "username"
+              erreurMessage="Le numéro de stationnement pmr ne doit contenir que des chiffres, et faire moins de 5 caractères"></app-champs>
+  <app-champs message = "Nom d'utilisateur pour la réservation :" input_id = "username"
               regex="^[A-Za-z' -]{0,100}$"
-              erreurMessage="Le nom d'utilisateur ne doit pas contenir de caractere speciaux ou accentué, et faire moins de 100 carcteres"></app-champs>
-  <app-champs message = "Reservation nombre de place :" input_id = "reservation"
+              erreurMessage="Le nom d'utilisateur ne doit pas contenir de caractères speciaux ou accentués, et faire moins de 100 caractères"></app-champs>
+  <app-champs message = "Nombre de place à réserver :" input_id = "reservation"
               regex="^[0-9]{0,2}$"
               erreurMessage="Il ne s'agit pas d'un nombre de place valide"></app-champs>
 

@@ -7,16 +7,19 @@ import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {UserService} from "../services/user-service/user.service";
 import {MatSort, MatSortHeader, MatSortModule, Sort} from "@angular/material/sort";
 import {NgIf} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
+import {ReservationFull} from "../models/ReservationFull";
 
 @Component({
   selector: 'app-tableau-pmr',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, NgIf],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, NgIf, MatIcon, MatIconButton],
   templateUrl: './tableau-pmr.component.html',
   styleUrl: './tableau-pmr.component.css'
 })
 export class TableauPmrComponent implements OnInit, AfterViewInit  {
-  displayedColumns : string[] = ["id", "nom", "quantite", "description", "point_geo"];
+  displayedColumns : string[] = ["id", "nom", "quantite", "description", "point_geo", "modifPmr","suppPmr"];
   datasourcePmr = new MatTableDataSource<Pmr>();
 
   @Input()
@@ -53,6 +56,10 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
   }
 
   fillWithReservation() {
+    this.getData()
+  }
+
+  getData() {
     this.userService.getPmrReservation().subscribe({
         next: data => {
           this.datasourcePmr.data;
@@ -73,5 +80,12 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
 
   onDetails(row : Pmr) :void {
     this.router.navigateByUrl('pmr-details/'+row.id);
+  }
+
+  onDelete(element : Pmr) {
+    this.pmrService.deletePmr(element).subscribe(
+      value => {this.getData()}
+    );
+
   }
 }

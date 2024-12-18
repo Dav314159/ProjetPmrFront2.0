@@ -2,6 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Pmr} from "../../models/Pmr";
 import {Observable} from "rxjs";
+import {ReservationFull} from "../../models/ReservationFull";
+import {Reservation} from "../../models/Reservation";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,10 @@ export class PmrService {
 
   checkpmrplace(pmr_id: number): Observable<Pmr> {
     return this.http.get<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/getPmr?id=${pmr_id}`)
+  }
+
+  deletePmr(data : Pmr) : Observable<Pmr> {
+    return this.http.post<Pmr>(`${this.API_URL}/${this.API_ENTITY_NAME}/deletePmr`, data);
   }
 }
 

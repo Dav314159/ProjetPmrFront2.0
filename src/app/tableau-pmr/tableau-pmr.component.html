@@ -2,7 +2,7 @@
   <mat-table [dataSource]="datasourcePmr" matSort matSortActive="description">
     <!-- Id Column -->
     <ng-container matColumnDef="id" >
-      <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Identifiant de stationnement</mat-header-cell>>
       <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>>
     </ng-container>
 
@@ -14,7 +14,7 @@
 
     <!-- Capacity Column -->
     <ng-container matColumnDef="quantite">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Capacity</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre de Places</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let element">{{element.quantite}}</mat-cell>
     </ng-container>
 
@@ -30,9 +30,26 @@
       <mat-cell mat-cell *matCellDef="let element">{{element.point_geo}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="modifPmr">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Supprimer</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" aria-label="Icon Modification" (click)="onDetails(element)">
+          <mat-icon>mode</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="suppPmr">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Supprimer</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" aria-label="Icon Suppression" (click)="onDelete(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="onDetails(row)"
     ></mat-row>
   </mat-table>
 
