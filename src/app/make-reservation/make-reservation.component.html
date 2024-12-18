@@ -9,7 +9,7 @@
               regex="^[A-Za-z' -]{0,100}$"
               erreurMessage="Le nom d'utilisateur ne doit pas contenir de caractere speciaux ou accentué, et faire moins de 100 carcteres"></app-champs>
   <app-champs message = "Reservation nombre de place :" input_id = "reservation"
-              regex="^[0-9]{0,1}$"
+              regex="^[0-9]{0,2}$"
               erreurMessage="Il ne s'agit pas d'un nombre de place valide"></app-champs>
 
   <div id="error" *ngIf="error"><p>{{messageErreur}}</p></div>
