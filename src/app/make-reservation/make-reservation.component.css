@@ -17,24 +17,6 @@ form h1 {
   margin-bottom: 20px;
 }
 
-form button {
-  background-color: #6c63ff; /* Couleur du bouton */
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form button:hover {
-  background-color: #5a53d1; /* Couleur du bouton au survol */
-}
-
-form button:active {
-  background-color: #4a45a1; /* Couleur du bouton lorsqu'il est cliqué */
-}
 
 form button:focus {
   outline: none; /* Retire la bordure de focus par défaut */
@@ -45,16 +27,6 @@ form button:disabled {
   cursor: not-allowed;
 }
 
-/* Bouton pour basculer entre inscription et connexion */
-form button.switch {
-  background-color: transparent;
-  color: #6c63ff;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 15px;
-  cursor: pointer;
-  border: none;
-}
 
 form button.switch:hover {
   text-decoration: underline;
@@ -63,12 +35,12 @@ form button.switch:hover {
 /* Style du div contenant les boutons */
 .buttons-container {
   display: flex;
-  justify-content: space-between; /* Place les boutons aux extrémités du div */
-  margin-top: 20px; /* Espacement entre le formulaire et les boutons */
+  justify-content: center; /* Place les boutons aux extrémités du div */
+  margin-top: 5%; /* Espacement entre le formulaire et les boutons */
 }
 
 /* Style pour chaque bouton */
-.buttons-container button, .buttons-container div {
+.buttons-container button {
   padding: 12px 20px;
   font-size: 16px;
   border-radius: 8px;
@@ -77,14 +49,16 @@ form button.switch:hover {
 }
 
 .buttons-container .left {
-  background-color: #6c63ff; /* Couleur du bouton de gauche */
+  background-color: #55a84a; /* Couleur du bouton de gauche */
   color: white;
+  &:hover {
+    background-color: #9eec94;
+    color: #3e7836;
+  }
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.buttons-container .right {
-  background-color: #f3f3f3; /* Couleur du bouton de droite */
-  color: #6c63ff; /* Couleur du texte du bouton de droite */
-}
 
 #error, #validation {
   background-color: #ffe6e6; /* Fond rouge pâle pour signaler une erreur */

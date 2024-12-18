@@ -18,7 +18,7 @@ form h1 {
 }
 
 form button {
-  background-color: #6c63ff; /* Couleur du bouton */
+  background-color: #55a84a; /* Couleur du bouton */
   color: white;
   padding: 12px;
   border: none;
@@ -29,11 +29,11 @@ form button {
 }
 
 form button:hover {
-  background-color: #5a53d1; /* Couleur du bouton au survol */
+  background-color: red; /* Couleur du bouton au survol */
 }
 
 form button:active {
-  background-color: #4a45a1; /* Couleur du bouton lorsqu'il est cliqué */
+  background-color: red; /* Couleur du bouton lorsqu'il est cliqué */
 }
 
 form button:focus {
@@ -48,7 +48,7 @@ form button:disabled {
 /* Bouton pour basculer entre inscription et connexion */
 form button.switch {
   background-color: transparent;
-  color: #6c63ff;
+  color: #55a84a;
   font-size: 14px;
   text-align: center;
   margin-top: 15px;
@@ -77,13 +77,22 @@ form button.switch:hover {
 }
 
 .buttons-container .left {
-  background-color: #6c63ff; /* Couleur du bouton de gauche */
+  background-color: #55a84a; /* Couleur du bouton de gauche */
   color: white;
+  &:hover {
+    background-color: #9eec94;
+    color: #3e7836;
+  }
 }
 
 .buttons-container .right {
+  margin-left: 2%;
   background-color: #f3f3f3; /* Couleur du bouton de droite */
-  color: #6c63ff; /* Couleur du texte du bouton de droite */
+  color: #55a84a; /* Couleur du texte du bouton de droite */
+  &:hover {
+    background-color: #b5e8af;
+    color: #44853c;
+  }
 }
 
 #error, #validation {
