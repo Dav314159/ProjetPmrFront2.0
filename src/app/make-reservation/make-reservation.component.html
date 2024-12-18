@@ -5,10 +5,10 @@
   <app-champs message = "Numéro de Pmr :" input_id = "pmr_id"
               regex="^[0-9]{0,5}$"
               erreurMessage="Le numéro de Pmr ne doit contenir que des chiffres , et faire moins de 5 carcteres"></app-champs>
-  <app-champs message = "nom d'utilisateur pour la reservation :" input_id = "username"
+  <app-champs message = "Nom d'utilisateur pour la reservation :" input_id = "username"
               regex="^[A-Za-z' -]{0,100}$"
               erreurMessage="Le nom d'utilisateur ne doit pas contenir de caractere speciaux ou accentué, et faire moins de 100 carcteres"></app-champs>
-  <app-champs message = "reservation nombre de place :" input_id = "reservation"
+  <app-champs message = "Réservation d'un nombre de place :" input_id = "reservation"
               regex="^[0-9]{0,1}$"
               erreurMessage="Il ne s'agit pas d'un nombre de place valide"></app-champs>
 
@@ -20,9 +20,7 @@
     <button class="left" type="submit">{{ isModification ? 'Modifier' : 'Réserver' }}</button>
 
 
-    <button type="button" class="right" (click)="onSwitchMode()" >
-      {{ isModification ?  'Pas encore de réservation ? Reservez un Pmr' : 'Un problème sur une reservation? Modifiez la' }}
-    </button>
+
 
   </div>
 </form>
