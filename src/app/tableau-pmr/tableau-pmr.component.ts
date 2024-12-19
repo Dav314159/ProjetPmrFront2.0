@@ -84,7 +84,7 @@ export class TableauPmrComponent implements OnInit, AfterViewInit  {
 
   onDelete(element : Pmr) {
     this.pmrService.deletePmr(element).subscribe(
-      value => {this.getData()}
+      value => {this.fillWithAll();},
     );
 
   }
