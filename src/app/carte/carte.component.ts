@@ -68,7 +68,6 @@ export class CarteComponent implements OnInit {
     this.clearAllMarkers();
 
     // On ajoute tous les points sur la carte
-    let i = 0;
     for (const pmr of this.dataPmr) {
       const pos: string[] = pmr.point_geo.split(", ");
       const markerPmr = L.marker([Number(pos[0]), Number(pos[1])]);
@@ -81,12 +80,6 @@ export class CarteComponent implements OnInit {
       popup.setContent(this.createPopup(pmr));
       markerPmr.bindPopup( popup );
       markerPmr.addTo(this.map);
-
-      i++;
-      if (i > 50){
-        console.log("Limit de point fixé à 50");
-        break;
-      }
     }
   }
 
